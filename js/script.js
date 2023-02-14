@@ -311,7 +311,7 @@ function success()
     }
     for(const k in tierlist)
     {
-        let stringified = tierlist[k]["Name"] + " " + tierlist[k]["JP"] + " " + tierlist[k]["Nickname"] + " " + tierlist[k]["Element"] + " " + tierlist[k]["Type"].join(' ') + " " + tierlist[k]["Style"] + " " + tierlist[k]["Specialty"].join(' ') + " " + tierlist[k]["Gender"] + " " + tierlist[k]["Series"];
+        let stringified = k.slice(0, 10) + " " + tierlist[k]["Name"] + " " + tierlist[k]["JP"] + " " + tierlist[k]["Nickname"] + " " + tierlist[k]["Element"] + " " + tierlist[k]["Type"].join(' ') + " " + tierlist[k]["Style"] + " " + tierlist[k]["Specialty"].join(' ') + " " + tierlist[k]["Gender"] + " " + tierlist[k]["Series"];
         switch(tierlist[k]["Uncap"])
         {
             case '5': case 5: stringified += " flb 5"; break;
@@ -331,6 +331,13 @@ function success()
     total = counter;
     document.getElementById("counter").innerHTML = counter + " characters";
     sorttable.init();
+    let params = new URLSearchParams(window.location.search);
+    let filterterms = params.get("filter");
+    if(filterterms != null)
+    {
+        document.getElementById("filter").value = filterterms;
+        filter();
+    }
 }
 
 function setImgStyle(img, style)
@@ -339,7 +346,23 @@ function setImgStyle(img, style)
 }
 
 function filter() {
-    let values = document.getElementById('filter').value.toLowerCase()
+    let values = document.getElementById('filter').value;
+    let params = new URLSearchParams(window.location.search);
+    let filterterms = params.get("filter");
+    if(values === "")
+    {
+        params.delete("filter");
+        let newRelativePathQuery = window.location.pathname;
+        history.pushState(null, '', newRelativePathQuery);
+    }
+    else if(values != filterterms)
+    {
+        params.set("filter", values);
+        let newRelativePathQuery = window.location.pathname + '?' + params.toString();
+        history.pushState(null, '', newRelativePathQuery);
+    }
+    values = values.toLowerCase();
+    console.log(values);
     let rows = document.getElementById("table-content").children;
     if(values === "")
     {
