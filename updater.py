@@ -58,19 +58,24 @@ class TL():
             with self.lock:
                 if len(queue) == 0: return
                 cid = queue.pop()
-            for uncap in ['_04', '_03', '_02', '']:
-                if self.request("https://prd-game-a-granbluefantasy.akamaized.net/assets/js_low/model/manifest/npc_{}{}.js".format(cid, uncap)) is not None:
+            for uncap in ['_04', '_04_s2', '_03', '_03_s2', '_02', '_02_s2', '']:
+                if uncap == '':
+                    break
+                elif self.request("https://prd-game-a-granbluefantasy.akamaized.net/assets/js_low/model/manifest/npc_{}{}.js".format(cid, uncap)) is not None:
                     break
             match uncap:
-                case '_04': uncap = 6
-                case '_03': uncap = 5
-                case '_02': uncap = 4
+                case '_04'|'_04_s2': uncap = 6
+                case '_03'|'_03_s2': uncap = 5
+                case '_02'|'_02_s2': uncap = 4
                 case '': continue
-            data = self.getData(cid, uncap)
-            with self.lock:
-                new.append(cid)
-                print("New Element:", cid)
-                self.data[cid + ' 4'] = data
+            try:
+                data = self.getData(cid, uncap)
+                with self.lock:
+                    new.append(cid)
+                    print("New Element:", cid)
+                    self.data[cid + ' 4'] = data
+            except Exception as e:
+                print(e)
 
     def getData(self, cid, uncap):
         data = {'Name':'???', 'Nickname':'', 'Uncap':uncap, 'Rating':None, 'Series':[]}

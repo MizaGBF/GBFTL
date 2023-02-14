@@ -1,1 +1,0 @@
-python updater.py -init
