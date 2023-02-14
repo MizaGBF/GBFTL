@@ -349,7 +349,7 @@ function filter() {
     let values = document.getElementById('filter').value;
     let params = new URLSearchParams(window.location.search);
     let filterterms = params.get("filter");
-    if(values === "")
+    if(filterterms != null && values === "")
     {
         params.delete("filter");
         let newRelativePathQuery = window.location.pathname;
