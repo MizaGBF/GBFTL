@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>GBF Tier List</title>
+    <meta name="title" content="GBF Tier List">
+    <meta name="description" content="The GBF Tier List Project">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://mizagbf.github.io/GBFTL/">
+    <meta property="og:title" content="GBF Tier List">
+    <meta property="og:description" content="The GBF Tier List Project">
+    <meta property="og:image" content="https://mizagbf.github.io/GBFTL/assets/ui/card.png">
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://mizagbf.github.io/GBFTL/">
+    <meta property="twitter:title" content="GBF Tier List">
+    <meta property="twitter:description" content="The GBF Tier List Project">
+    <meta property="twitter:image" content="https://mizagbf.github.io/GBFTL/assets/ui/card.png">
+    <link rel="icon" type="image/png" href="assets/icon.png">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/script.js"></script>
+    <script src="js/sorttable.js"></script> <!-- Source: https://github.com/dascritch/sorttable -->
+</head>
+<body onload="init()">
+    <a href="index.html"><img id="titleheader" src="assets/ui/header.png" alt="header"></a>
+    <div id="version"><b>BETA</b></div>
+    <br>
+    <details>
+        <summary>Explanations</summary>
+        <h3 class="content">
+            <ul>
+                <li><b>This page is work in progress.</b></li>
+                <li>This tier list is generated automatically.</li>
+                <li>Data used: Wiki, existing tier lists and more.</li>
+                <li>You can sort by clicking on the headers.</li>
+                <li>You can filter by name, element and more (Example: "female fire grand draph").</li>
+            </ul>
+        </h3>
+    </details>
+    <br>
+    <input type="text" id="filter" onkeyup="filter()" placeholder="Search the Tier List" style="width:500px">
+    <br>
+    <div id="counter"></div>
+    <br>
+    <table id="tier-list" class="sortable">
+        <thead id="table-header">
+            <tr>
+            </tr>
+        </thead>
+        <tbody id="table-content">
+        </tbody>
+    </table>
+    <footer>
+        <a href="https://github.com/MizaGBF/GBFTL">Source</a>
+    </footer>
+</body>
+</html>
