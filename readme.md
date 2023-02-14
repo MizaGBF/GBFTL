@@ -1,3 +1,6 @@
+# THIS PROJECT IN AN EXPERIMENT  
+I don't know if I will support it all the way.  
+  
 # GBF Tier List (Frontend)  
 Automated Tier List for GBF SSR Characters.  
 Click [Here](https://mizagbf.github.io/GBFTL) to access it.  
