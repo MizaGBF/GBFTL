@@ -126,7 +126,7 @@ function success()
                     img.setAttribute('onerror', "this.onerror=null;this.src='assets/ui/dummy.jpg';");
                     img.src = 'https://prd-game-a1-granbluefantasy.akamaized.net/assets_en/img_low/sp/assets/npc/m/' + id + uncap + style + '.jpg';
                     img.alt = id + uncap + style;
-                    img.title = value["Name"];
+                    img.title = id;
                     img.onload = setImgStyle(img, "width:140px;");
                     img.loading = "lazy";
                     ref.appendChild(img);
