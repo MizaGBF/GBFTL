@@ -226,7 +226,7 @@ class TL():
         cids = ['3040088000']
         for cid in cids:
             if cid + 's2' not in self.data:
-                self.data[cid + 's2'] = data = self.getData(cid + "_st2", 0)
+                self.data[cid + 's2'] = self.getData(cid + "_st2", 0)
         tmp = {}
         keys = list(self.data.keys())
         keys.sort()
@@ -276,8 +276,9 @@ class TL():
             for k in keys:
                 self.data[k]['Nickname'] = a
             modified = True
-        with open("list.json", mode="w", encoding="utf-8") as f:
-            json.dump(self.data, f, ensure_ascii=False)
+        if modified:
+            with open("list.json", mode="w", encoding="utf-8") as f:
+                json.dump(self.data, f, ensure_ascii=False)
         print("Done.")
 
 if __name__ == "__main__":
@@ -297,6 +298,6 @@ if __name__ == "__main__":
         if len(sys.argv) == 2:
             print("Please add character IDs")
         else:
-            p.manualUpdate(sys.argv[2:])
+            t.manualUpdate(sys.argv[2:])
     else:
         t.updateIndex()
