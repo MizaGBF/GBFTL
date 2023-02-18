@@ -53,6 +53,32 @@ class TL():
                 print("list.json has been updated.")
             print("Done.")
 
+    def manualUpdate(self, cids):
+        nthread = 25
+        with concurrent.futures.ThreadPoolExecutor(max_workers=nthread) as executor:
+            queue = []
+            new = []
+            for cid in cids:
+                if len(cid) == 10 and cid.startswith('304') and cid != "3040097000":
+                    queue.append(cid)
+            print("Attempting to update", len(queue), "element(s)")
+            futures = [executor.submit(self.update_sub, queue, new) for i in range(nthread)]
+            for future in concurrent.futures.as_completed(futures):
+                future.result()
+            print("Checking results...")
+            if len(new) > 0:
+                tmp = {}
+                keys = list(self.data.keys())
+                keys.sort()
+                for k in keys:
+                    tmp[k] = self.data[k]
+                self.data = tmp
+                with open("list.json", mode="w", encoding="utf-8") as f:
+                    json.dump(self.data, f, ensure_ascii=False)
+                print("list.json has been updated.")
+            print("Done.")
+        
+
     def update_sub(self, queue, new):
         while True:
             with self.lock:
@@ -72,8 +98,13 @@ class TL():
                 data = self.getData(cid, uncap)
                 with self.lock:
                     new.append(cid)
-                    print("New Element:", cid)
-                    self.data[cid + ' 4'] = data
+                    if cid+' 4' in self.data:
+                        print("Updated Element:", cid)
+                        data['Rating'] = self.data[cid + ' 4']['Rating']
+                        self.data[cid + ' 4'] = data
+                    else:
+                        print("New Element:", cid)
+                        self.data[cid + ' 4'] = data
             except Exception as e:
                 print(e)
 
@@ -262,5 +293,10 @@ if __name__ == "__main__":
         t.generateRating()
     elif '-nick' in sys.argv:
         t.nickname()
+    elif sys.argv[1] == '-update':
+        if len(sys.argv) == 2:
+            print("Please add character IDs")
+        else:
+            p.manualUpdate(sys.argv[2:])
     else:
         t.updateIndex()
