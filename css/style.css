@@ -23,8 +23,29 @@ summary {
     text-shadow: #000000 1px 0 10px;
 }
 
-footer {
+footer, #header {
+    font-family: sans-serif;
     font-size: 15px;
+    text-align:center;
+    background: #000000b0;
+    border-color: #000000;
+    border-radius: 10px;
+    border-style: solid;
+    width:150px;
+    margin:auto;
+}
+
+#header {
+    font-family: sans-serif;
+    font-size: 15px;
+    color: white;
+    text-align:center;
+    background: #000000b0;
+    border-color: #000000;
+    border-radius: 10px;
+    border-style: solid;
+    width:300px;
+    margin:auto;
 }
 
 img {
@@ -136,20 +157,23 @@ h3 {
 
 a:link {
     color: red;
+    font-size: 1em;
 }
 
 a:visited {
     color: pink;
+    font-size: 1em;
 }
 
 a:hover {
     color: white;
+    font-size: 1em;
 }
 
 a:active {
     color: yellow;
+    font-size: 1em;
 }
-
 table {
     background: #91a0b8b0;
     table-layout: fixed;
@@ -173,6 +197,10 @@ tr {
 tr td:last-child {
     max-width:100%;
     white-space:nowrap;
+}
+
+.new {
+    background-color: #ffa70088;
 }
 
 #hidden {

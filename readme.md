@@ -1,5 +1,4 @@
-# THIS PROJECT IN AN EXPERIMENT  
-I don't know if I will support it all the way.  
+*This project is highly experiment, I won't guarantee its long term support.*  
   
 # GBF Tier List (Frontend)  
 Automated Tier List for GBF SSR Characters.  
@@ -13,3 +12,7 @@ Possible command lines:
 `python updater.py -fix` to add Eternal other steps and Character styles.  
 `python updater.py -rate` to manually force a rating update.  
 `python updater.py -nick` to manually add nicknames to characters.  
+  
+# backend  
+(aka the rating generator)  
+I intend to keep it closed source, for now.  

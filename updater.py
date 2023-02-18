@@ -5,6 +5,7 @@ import json
 from bs4 import BeautifulSoup
 import sys
 from copy import deepcopy
+from datetime import datetime, timezone
 
 class TL():
     def __init__(self):
@@ -51,6 +52,7 @@ class TL():
                 with open("list.json", mode="w", encoding="utf-8") as f:
                     json.dump(self.data, f, ensure_ascii=False)
                 print("list.json has been updated.")
+                self.changelog()
             print("Done.")
 
     def manualUpdate(self, cids):
@@ -76,6 +78,7 @@ class TL():
                 with open("list.json", mode="w", encoding="utf-8") as f:
                     json.dump(self.data, f, ensure_ascii=False)
                 print("list.json has been updated.")
+                self.changelog()
             print("Done.")
         
 
@@ -280,6 +283,11 @@ class TL():
             with open("list.json", mode="w", encoding="utf-8") as f:
                 json.dump(self.data, f, ensure_ascii=False)
         print("Done.")
+
+    def changelog(self, new=[]):
+        with open("changelog.json", mode="w", encoding="utf-8") as f:
+            json.dump({'timestamp':int(datetime.now(timezone.utc).timestamp()*1000), 'new':new}, f, ensure_ascii=False)
+        print("changelog.json has been updated")
 
 if __name__ == "__main__":
     t = TL()

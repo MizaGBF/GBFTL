@@ -1,10 +1,25 @@
 // constant
 var tierlist = null;
+var changelog = [];
 var counter = 0;
 var total = 0;
 
 function init()
 {
+    loadFile('changelog.json?' + Date.now(), init2, init2);
+}
+
+function init2()
+{
+    try{
+        let json = JSON.parse(this.response);
+        let date = (new Date(json['timestamp'])).toISOString();
+        document.getElementById('timestamp').innerHTML += " " + date.split('T')[0] + " " + date.split('T')[1].split(':').slice(0, 2).join(':') + " UTC";
+        changelog = json['new'];
+    }catch{
+        document.getElementById('timestamp').innerHTML = "";
+        changelog = [];
+    }
     loadFile('list.json?' + Date.now(), success, failed);
 }
 
@@ -131,6 +146,7 @@ function success()
                     img.loading = "lazy";
                     ref.appendChild(img);
                     new_td.appendChild(ref);
+                    if(changelog.includes(id)) new_tr.className = "new";
                     new_td.setAttribute('sorttable_customkey', img.alt);
                     break;
                 }
@@ -326,6 +342,7 @@ function success()
             case 4: stringified += " core"; break;
             default: stringified += " not rated"; break;
         }
+        if(changelog.includes(k.slice(0, 10))) stringified += " updated";
         tierlist[k] = stringified.toLowerCase();
     }
     total = counter;
@@ -362,7 +379,6 @@ function filter() {
         history.pushState(null, '', newRelativePathQuery);
     }
     values = values.toLowerCase();
-    console.log(values);
     let rows = document.getElementById("table-content").children;
     if(values === "")
     {
