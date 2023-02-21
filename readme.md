@@ -1,4 +1,4 @@
-*This project is highly experiment, I won't guarantee its long term support.*  
+*This project is highly experimental, I won't guarantee its long term support.*  
   
 # GBF Tier List (Frontend)  
 Automated Tier List for GBF SSR Characters.  

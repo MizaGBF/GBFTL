@@ -52,7 +52,6 @@ class TL():
                 with open("list.json", mode="w", encoding="utf-8") as f:
                     json.dump(self.data, f, ensure_ascii=False)
                 print("list.json has been updated.")
-                self.changelog()
             print("Done.")
 
     def manualUpdate(self, cids):
@@ -78,7 +77,6 @@ class TL():
                 with open("list.json", mode="w", encoding="utf-8") as f:
                     json.dump(self.data, f, ensure_ascii=False)
                 print("list.json has been updated.")
-                self.changelog()
             print("Done.")
         
 
@@ -259,6 +257,7 @@ class TL():
                 self.data[cid + uncap]["Rating"] = int(rating)
         with open("list.json", mode="w", encoding="utf-8") as f:
             json.dump(self.data, f, ensure_ascii=False)
+        self.changelog()
         print("Done.")
 
     def nickname(self):
