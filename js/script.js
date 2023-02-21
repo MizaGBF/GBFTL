@@ -446,7 +446,10 @@ function filter() {
             let result = true;
             for(let v of values)
             {
-                result = result & character.includes(v);
+                let b;
+                if(v.startsWith('-')) b = !character.includes(v.slice(1));
+                else b = character.includes(v);
+                result = result & b;
                 if(!result) break;
             }
             if(result) unhide(rows[i]);
