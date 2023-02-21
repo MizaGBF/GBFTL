@@ -155,6 +155,10 @@ h3 {
     text-shadow: #000000 1px 0 10px;
 }
 
+.clickable {
+    cursor: pointer;
+}
+
 a:link {
     color: red;
     font-size: 1em;

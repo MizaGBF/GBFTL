@@ -241,6 +241,7 @@ class TL():
     def generateRating(self):
         with open("generation.txt", mode="r") as f:
             r = f.read().replace('\r', '').split('\n')
+        new = []
         for e in r:
             if e == '': continue
             s = e.split(' ')
@@ -254,10 +255,11 @@ class TL():
                 rating = s[2]
             if rating == "None": continue
             if cid + uncap in self.data:
+                if self.data[cid + uncap]["Rating"] != int(rating): new.append(cid)
                 self.data[cid + uncap]["Rating"] = int(rating)
         with open("list.json", mode="w", encoding="utf-8") as f:
             json.dump(self.data, f, ensure_ascii=False)
-        self.changelog()
+        self.changelog(new)
         print("Done.")
 
     def nickname(self):

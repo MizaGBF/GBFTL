@@ -156,6 +156,8 @@ function success()
                     let bold = document.createElement('strong');
                     let textnode = document.createTextNode(value["Name"]); 
                     bold.appendChild(textnode); 
+                    new_td.className = "clickable";
+                    new_td.setAttribute("onclick", 'updateFilter("'+value["Name"]+'");');
                     new_td.appendChild(bold);
                     new_td.setAttribute('sorttable_customkey', value["Name"].toLowerCase());
                     break;
@@ -166,11 +168,12 @@ function success()
                     if(value['Uncap'] != 0)
                     {
                         let img = document.createElement('img');
+                        img.className = "clickable";
                         switch(value['Uncap'])
                         {
-                            case '5': case 5: img.src = 'assets/stars/5.png'; img.alt = '5★'; new_td.setAttribute('sorttable_customkey', "flb"); break;
-                            case '6': case 6: img.src = 'assets/stars/6.png'; img.alt = '6★'; new_td.setAttribute('sorttable_customkey', "ulb"); break;
-                            default: img.src = 'assets/stars/4.png'; img.alt = '4★'; new_td.setAttribute('sorttable_customkey', "mlb"); break;
+                            case '5': case 5: img.src = 'assets/stars/5.png'; img.alt = '5★'; new_td.setAttribute('sorttable_customkey', "flb"); img.setAttribute("onclick", 'updateFilter("flb");'); break;
+                            case '6': case 6: img.src = 'assets/stars/6.png'; img.alt = '6★'; new_td.setAttribute('sorttable_customkey', "ulb"); img.setAttribute("onclick", 'updateFilter("ulb");'); break;
+                            default: img.src = 'assets/stars/4.png'; img.alt = '4★'; new_td.setAttribute('sorttable_customkey', "mlb"); img.setAttribute("onclick", 'updateFilter("mlb");'); break;
                         }
                         img.title = img.alt;
                         img.onload = setImgStyle(img, "width:70px");
@@ -190,6 +193,8 @@ function success()
                         img.title = value["Element"];
                         img.onload = setImgStyle(img, "width:80px;");
                         img.loading = "lazy";
+                        img.className = "clickable";
+                        img.setAttribute("onclick", 'updateFilter("'+value["Element"].toLowerCase()+'");');
                         new_td.appendChild(img);
                         switch(img.alt)
                         {
@@ -216,8 +221,10 @@ function success()
                         {
                             let img = document.createElement('img');
                             img.src = 'assets/series/' + value["Series"][j].toLowerCase() + '.png';
-                            img.alt = value["Series"][j].toLowerCase();
-                            img.title = value["Series"][j];
+                            img.className = "clickable";
+                            img.setAttribute("onclick", 'updateFilter("'+(value["Series"][j]=='12'?'12 Generals':value["Series"][j].toLowerCase())+'", 0);');
+                            img.alt = (value["Series"][j]=='12'?'12 Generals':value["Series"][j].toLowerCase());
+                            img.title = (value["Series"][j]=='12'?'12 Generals':value["Series"][j]);
                             img.onload = setImgStyle(img, istyle);
                             img.loading = "lazy";
                             new_td.appendChild(img);
@@ -237,6 +244,8 @@ function success()
                             img.src = 'assets/specialties/' + value["Specialty"][j].toLowerCase() + '.png';
                             img.title = value["Specialty"][j].charAt(0).toUpperCase() + value["Specialty"][j].slice(1);
                             img.alt = value["Specialty"][j].toLowerCase();
+                            img.className = "clickable";
+                            img.setAttribute("onclick", 'updateFilter("'+value["Specialty"][j].toLowerCase()+'", 1);');
                             img.onload = setImgStyle(img, istyle);
                             img.loading = "lazy";
                             new_td.appendChild(img);
@@ -253,6 +262,8 @@ function success()
                         var img = document.createElement('img');
                         img.src = 'assets/styles/' + value["Style"].toLowerCase() + '.png';
                         img.alt = value["Style"].toLowerCase();
+                        img.className = "clickable";
+                        img.setAttribute("onclick", 'updateFilter("'+value["Style"].toLowerCase()+'");');
                         img.title = value["Style"];
                         img.onload = setImgStyle(img, "width:50px;");
                         img.loading = "lazy";
@@ -272,6 +283,8 @@ function success()
                             var img = document.createElement('img');
                             img.src = 'assets/types/' + value["Type"][j].toLowerCase() + '.png';
                             img.alt = value["Type"][j].toLowerCase();
+                            img.className = "clickable";
+                            img.setAttribute("onclick", 'updateFilter("'+value["Type"][j].toLowerCase()+'", 2);');
                             img.title = value["Type"][j];
                             img.onload = setImgStyle(img, istyle);
                             img.loading = "lazy";
@@ -286,8 +299,19 @@ function success()
                     new_td.id = "cell-gender";
                     var img = document.createElement('img');
                     img.src = 'assets/genders/' + value["Gender"].toLowerCase() + '.png';
-                    img.alt = value["Gender"].toLowerCase();
-                    img.title = value["Gender"];
+                    img.className = "clickable";
+                    if(value['Gender'] == 'Other')
+                    {
+                        img.alt = 'unknown';
+                        img.setAttribute("onclick", 'updateFilter("unknown");');
+                        img.title = "Unknown";
+                    }
+                    else
+                    {
+                        img.alt = value["Gender"].toLowerCase();
+                        img.setAttribute("onclick", 'updateFilter("'+value["Gender"].toLowerCase()+'");');
+                        img.title = value["Gender"];
+                    }
                     img.onload = setImgStyle(img, "width:40px;");
                     img.loading = "lazy";
                     new_td.appendChild(img);
@@ -297,7 +321,7 @@ function success()
                 {
                     new_td.id = "cell-rating";
                     let r = JSON.stringify(value["Rating"]).toLowerCase();
-                    let custom_key = "";                    
+                    let custom_key = "";
                     let img = document.createElement('img');
                     img.onload = setImgStyle(img, "width:80px");
                     img.loading = "lazy";
@@ -311,6 +335,8 @@ function success()
                         default: custom_key = "0"; r = "Not Rated"; break;
                     }
                     img.alt = r;
+                    img.className = "clickable";
+                    img.setAttribute("onclick", 'updateFilter("'+r+'");');
                     img.title = r;
                     new_td.appendChild(img);
                     new_td.setAttribute('sorttable_customkey', custom_key);
@@ -327,7 +353,27 @@ function success()
     }
     for(const k in tierlist)
     {
-        let stringified = k.slice(0, 10) + " " + tierlist[k]["Name"] + " " + tierlist[k]["JP"] + " " + tierlist[k]["Nickname"] + " " + tierlist[k]["Element"] + " " + tierlist[k]["Type"].join(' ') + " " + tierlist[k]["Style"] + " " + tierlist[k]["Specialty"].join(' ') + " " + tierlist[k]["Gender"] + " " + tierlist[k]["Series"];
+        let stringified = k.slice(0, 10) + " " + tierlist[k]["Name"] + " " + tierlist[k]["JP"] + " " + tierlist[k]["Nickname"] + " " + tierlist[k]["Element"] + " " + tierlist[k]["Type"].join(' ') + " " + tierlist[k]["Style"];
+        if(tierlist[k]["Gender"] == 'Other') stringified += " unknown genderless";
+        else stringified += " " + tierlist[k]["Gender"];
+        for(const e in tierlist[k]["Specialty"])
+        {
+            switch(tierlist[k]["Specialty"][e])
+            {
+                case "Sabre": stringified += " sabre sword"; break;
+                case "Melee": stringified += " melee fist"; break;
+                case "Staff": stringified += " staff stick"; break;
+                default: stringified += " " + tierlist[k]["Specialty"][e]; break;
+            }
+        }
+        for(const e in tierlist[k]["Series"])
+        {
+            switch(tierlist[k]["Series"][e])
+            {
+                case "12": stringified += " 12 generals zodiac"; break;
+                default: stringified += " " + tierlist[k]["Series"][e]; break;
+            }
+        }
         switch(tierlist[k]["Uncap"])
         {
             case '5': case 5: stringified += " flb 5"; break;
@@ -363,7 +409,7 @@ function setImgStyle(img, style)
 }
 
 function filter() {
-    let values = document.getElementById('filter').value;
+    let values = document.getElementById('filter').value.trim();
     let params = new URLSearchParams(window.location.search);
     let filterterms = params.get("filter");
     if(filterterms != null && values === "")
@@ -372,7 +418,7 @@ function filter() {
         let newRelativePathQuery = window.location.pathname;
         history.pushState(null, '', newRelativePathQuery);
     }
-    else if(values != filterterms)
+    else if(values != filterterms && values !== "")
     {
         params.set("filter", values);
         let newRelativePathQuery = window.location.pathname + '?' + params.toString();
@@ -428,4 +474,54 @@ function unhide(element) {
             element.id += e + " ";
         }
     }
+}
+
+function updateFilter(word, multi = null) {
+    let params = new URLSearchParams(window.location.search);
+    let filterterms = params.get("filter");
+    if(filterterms == null) filterterms = "";
+    filterterms = filterterms.trim().replace(/\s\s+/g, ' ').split(" ");
+    word = word.toLowerCase().split(" ");
+    switch(multi) // special filter
+    {
+        case 0:
+            for(const i in filterterms)
+            {
+                if(['12', 'generals', 'zodiac', 'zodiacs', 'eternal', 'eternals', 'fantasy', 'grand', 'halloween', 'holiday', 'summer', 'tie-in', 'event', 'valentine', 'yukata'].includes(filterterms[i].toLowerCase()))
+                    filterterms[i] = '';
+            }
+            break;
+        case 1:
+            for(const i in filterterms)
+            {
+                if(['axe', 'bow', 'dagger', 'gun', 'eternal', 'harp', 'katana', 'melee', 'fist', 'sabre', 'sword', 'spear', 'staff', 'stick'].includes(filterterms[i].toLowerCase()))
+                    filterterms[i] = '';
+            }
+            break;
+        case 2:
+            for(const i in filterterms)
+            {
+                if(['draph', 'harvin', 'erune', 'human', 'other', 'primal'].includes(filterterms[i].toLowerCase()))
+                    filterterms[i] = '';
+            }
+            break;
+        default:
+            break;
+    };
+    for(const j in word)
+    {
+        let done = 0;
+        for(const i in filterterms)
+        {
+            if(filterterms[i].toLowerCase() == word[j])
+            {
+                if(done > 0) filterterms[i] = '';
+                ++done;
+            }
+        }
+        if(done == 0) filterterms.push(word[j]);
+        console.log(word, filterterms, done);
+    }
+    document.getElementById("filter").value = filterterms.join(' ').trim().replace(/\s\s+/g, ' ');
+    filter();
 }
