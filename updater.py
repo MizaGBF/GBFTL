@@ -98,6 +98,10 @@ class TL():
             try:
                 data = self.getData(cid, uncap)
                 with self.lock:
+                    for k in self.data:
+                        if self.data[k]['Name'] == data['Name']:
+                            data['Nickname'] = self.data[k]['Nickname']
+                            break
                     new.append(cid)
                     if cid+' 4' in self.data:
                         print("Updated Element:", cid)
